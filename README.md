@@ -2,7 +2,7 @@
 ![](https://github.com/lytgysrn/Stat744/blob/main/image/Graph.png)
 
 I think this graph is not good.
-The reasons are list below:
+The reasons are listed below:
 
 **1**: It seems that the data set has some missing values for some cities (e.g. QUE in 2000), this graph directly leaves it as blank, which may confuse readers (missing value or 0 value).
 
