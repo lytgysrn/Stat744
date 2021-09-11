@@ -1,4 +1,5 @@
 # Stat744
+![](https://github.com/lytgysrn/Stat744/blob/main/image/Graph.png)
 
 I think this graph is not good.
 The reasons are list below:
