@@ -41,7 +41,9 @@ ggplot(data=Measles_data, aes(x=year, y=cases))+
 
 ```
 
-Generally, for time series data, line graph is a better choice for showing changes over time. Compared with Jia You's graph, it is easy to understand that the cases dropped dramatically after $1964$ from the line graph. Moreover, the line graph shows a clear comparison about cases number before and after vaccines licensed. The drawbacks of Jia You's graph are those circles are too large for representing number of cases, the overlaps of circles make the graph become a little bit difficult to read and it is not precise enough for indicating the number of cases by the area of circles.
+Generally, for time series data, line graph is a better choice for showing changes over time.
+Compared with Jia You's graph, it is easy to understand that the cases dropped dramatically after $1964$ from the line graph. Moreover, the line graph shows a clear comparison about cases number before and after vaccines licensed.
+The drawbacks of Jia You's graph are those circles are too large for representing number of cases, the overlaps of circles make the graph become a little bit difficult to read and it is not precise enough for indicating the number of cases by the area of circles.
 
 # Second GG plot
 ```{r warning=FALSE}
@@ -67,4 +69,7 @@ ggplot(Measles_data_rough, aes(x=year_label, y=cases_meanbyfive))+
                    position=position_stack(1.5), vjust=1.5) 
    
 ```
-If our goal is to show the effectiveness of vaccines, it is not necessary for us to draw data points by year. Here, the histogram shows the 5-years average reported cases of Measles, which sacrifices the data accuracy, but shows the effectiveness of vaccines in a simple and efficient approach, and weakens the effect of data fluctuations. In the first four periods, the number of cases fluctuates in a certain level, but after the period contains the event vaccine licensed, the height of the bar shrinks to nearly $\frac{1}{4}$ of previous periods.And then though some fluctuations still happen, the number of cases shrinks in general and after the period of $1990$ to $1994$, it is nearly disappeared.
+If our goal is to show the effectiveness of vaccines, it is not necessary for us to draw data points by year.
+Here, the histogram shows the 5-years average reported cases of Measles, which sacrifices the data accuracy, but shows the effectiveness of vaccines in a simple and efficient approach, and weakens the effect of data fluctuations. 
+In the first four periods, the number of cases fluctuates in a certain level, but after the period contains the event vaccine licensed, the height of the bar shrinks to nearly $\frac{1}{4}$ of previous periods.
+And then though some fluctuations still happen, the number of cases shrinks in general and after the period of $1990$ to $1994$, it is nearly disappeared.
