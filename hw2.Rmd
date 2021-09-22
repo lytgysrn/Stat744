@@ -19,34 +19,41 @@ It is easy to notice that, after $1963$, the Measles vaccine introduced, the num
 
 ```{r}
 library(ggplot2)
+library(tidyverse)
 data_dis<-read.csv("https://mac-theobio.github.io/DataViz/data/vaccine_data_online.csv")
 ```
 
 
 # First GG plot
 ```{r}
-Measles_data<-data_dis[which(data_dis$disease=="Measles"),]
-Measles_vaccine<-Measles_data[which(Measles_data$vaccine!=FALSE),]
-ggplot(data=Measles_data, aes(x=year, y=cases))+
-  geom_line()+ geom_point(data=Measles_vaccine,aes(x=year,y=cases),
-                          size=3,shape=20, color="blue",alpha=0.9)+
-   geom_text(data = Measles_vaccine, aes(x =year, y = cases*0.95, label = vaccine))+
-   annotate( geom = "segment",x=Measles_vaccine$year,
-           xend = Measles_vaccine$year,y=Measles_vaccine$cases,yend = -Inf,
-           lty="dashed")+ 
-  annotate(geom = "text",x=Measles_vaccine$year,y=10,
-           label=Measles_vaccine$year,
-           vjust=3,color="red",size=3)+
-  coord_cartesian(clip = "off")+labs(title = "The line graph of cases of Measles by year")
 
+
+data<-data_dis %>% mutate(disease= factor(disease),
+                          disease= reorder(disease,cases, Fun=mean))
+data$disease<- factor(data$disease, levels=rev(levels(data$disease)))
+data_vaccine<-data[which(data$vaccine!=FALSE),]
+
+
+ggplot(data=data, aes(x=year, y=cases,colour=disease))+
+  geom_line(size=2)+ geom_point(data=data_vaccine,aes(x=year,y=cases),
+                          size=3,shape=20, color="black",alpha=0.9)+
+  facet_wrap(.~disease, ncol = 3,scales="free")+
+  theme(legend.position = 0)+ labs(title = "Line graphs about reported cases of 9 diseases by year",
+       subtitle = "Black points stand for the vaccine licensed") 
 ```
 
 Generally, for time series data, line graph is a better choice for showing changes over time.
-Compared with Jia You's graph, it is easy to understand that the cases dropped dramatically after $1964$ from the line graph. Moreover, the line graph shows a clear comparison about cases number before and after vaccines licensed.
-The drawbacks of Jia You's graph are those circles are too large for representing number of cases, the overlaps of circles make the graph become a little bit difficult to read and it is not precise enough for indicating the number of cases by the area of circles.
+Compared with Jia You's graph, from the Measles' line graph, it is easy to understand that the number of reported cases dropped dramatically after $1964$. Moreover, for the goal to prove the importance of vaccines, more examples are more convincing. 
+
+Although the data of different diseases are in different scales and sometimes will increase the difficulty of interpretability, we can see from those $9$ line graphs, the reported cases of majority diseases show an obvious decreasing trend after vaccines licensed. 
+
+The drawbacks of Jia You's graph are that those circles take too much spaces for representing number of cases, the overlaps of circles make the graph become a little bit difficult to read and it is not precise enough for indicating the number of cases by the area of circles.
 
 # Second GG plot
 ```{r warning=FALSE}
+
+Measles_data<-data_dis[which(data_dis$disease=="Measles"),]
+Measles_vaccine<-Measles_data[which(Measles_data$vaccine!=FALSE),]
 dim(Measles_data)
 
 cases_meanbyfive=c()
@@ -62,11 +69,11 @@ area_text <- rep(NA, 14)
 area_text[4]="1963 \n Vaccine \n licensed"
 ggplot(Measles_data_rough, aes(x=year_label, y=cases_meanbyfive))+
     geom_bar(stat = "identity")+
-    theme(axis.text.x = element_text(angle=0, vjust=0.5,size=6))+
+    theme(axis.text.x = element_text(angle=0, vjust=0.5,size=8))+
     labs(y="average number of cases",x='',
          title = "The bar chart of 5-years average reported cases of Measles from 1945 to 2014")+
     geom_text(label=area_text, colour = "blue",
-                   position=position_stack(1.5), vjust=1.5) 
+                   position=position_stack(1.2), vjust=1.5) 
    
 ```
 If our goal is to show the effectiveness of vaccines, it is not necessary for us to draw data points by year.
