@@ -80,3 +80,10 @@ If our goal is to show the effectiveness of vaccines, it is not necessary for us
 Here, the histogram shows the 5-years average reported cases of Measles, which sacrifices the data accuracy, but shows the effectiveness of vaccines in a simple and efficient approach, and weakens the effect of data fluctuations. 
 In the first four periods, the number of cases fluctuates in a certain level, but after the period contains the event vaccine licensed, the height of the bar shrinks to nearly $\frac{1}{4}$ of previous periods.
 And then though some fluctuations still happen, the number of cases shrinks in general and after the period of $1990$ to $1994$, it is nearly disappeared.
+
+
+# Extra
+
+Data set: https://www.statista.com/statistics/244615/share-of-us-persons-who-received-an-influenza-vaccination/
+
+This data set is about the estimate influenza vaccine rates of the elder who are at least $65$ years old in U.S. from $1997$ to $2018$. The vaccine rate fluctuates by year, but in general, the vaccine rate has been improved for last $20$ years. 
