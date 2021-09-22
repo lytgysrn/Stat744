@@ -39,7 +39,7 @@ ggplot(data=data, aes(x=year, y=cases,colour=disease))+
                           size=3,shape=20, color="black",alpha=0.9)+
   facet_wrap(.~disease, ncol = 3,scales="free")+
   theme(legend.position = 0)+ labs(title = "Line graphs about reported cases of 9 diseases by year",
-       subtitle = "Black points stand for the vaccine licensed") 
+       subtitle = "Black points stand for the vaccine licensed year") 
 ```
 
 Generally, for time series data, line graph is a better choice for showing changes over time.
