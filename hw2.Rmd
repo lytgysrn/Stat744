@@ -81,6 +81,7 @@ Here, the histogram shows the 5-years average reported cases of Measles, which s
 In the first four periods, the number of cases fluctuates in a certain level, but after the period contains the event vaccine licensed, the height of the bar shrinks to nearly $\frac{1}{4}$ of previous periods.
 And then though some fluctuations still happen, the number of cases shrinks in general and after the period of $1990$ to $1994$, it is nearly disappeared.
 
+JD: Not sure the point of the Extra; maybe you can use it for HW3. The first picture is pretty nice, the second one is less nice. It also looks very different in the .html file compared to the one you saved. With the exponential decline in the second picture, I wonder if you thought about using a log scale. In both pictures, but especially the second, it would have been nice to make numbers more readable; here it looks like you could have reported all of your cases in thousands. Grade 2/3.
 
 # Extra
 
