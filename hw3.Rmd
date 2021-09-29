@@ -1,0 +1,63 @@
+---
+title: "744 Homework3"
+author: "Siyi Wang"
+date: "2021/9/29"
+output: pdf_document
+---
+
+The data is from https://www.kaggle.com/dhruvildave/top-play-store-games.
+
+The table I thought is terrible is the Out[32] in https://www.kaggle.com/vivekpinto/notebook816c45b7dc.
+
+Although Long table format sometimes is useful in coding, it is not easy to read.
+
+Rank of game actually means the rank of a game in a specific category, and this table puts all categories in a column, which results that even games in different categories do not have ranking relationships with each other, the first impression seems that the top games in this table have better rankings than the games in the bottom of table (e.g. games in category GAME ACTION vs games in category GAME WORD).
+
+Besides, Solitaire in category Game Card is confusing. It repeats several times in this table.
+
+
+
+I will reproduce this table here.
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(directlabels)
+```
+
+```{r}
+gamedata<-read.csv("D:/android-games.csv",encoding = "UTF-8")
+gamedata$installs<-as.numeric(sub(' .+',"",gamedata$installs))
+names(gamedata)[names(gamedata) == 'installs']<-'installs_in_million'
+topdata<-gamedata[gamedata$rank<4,]
+Table<-topdata[c(1,2,9,3,4,10)]
+View(Table)
+
+```
+
+
+
+```{r}
+Table_n<-Table%>%mutate("X5.star.rate"=X5.star.ratings/total.ratings)
+
+order <- Table%>%
+  arrange(total.ratings) %>%
+  pull(title) %>%
+  unique()
+Table_n$title<-factor(Table_n$title,levels = order)
+graph<-(ggplot(Table_n,aes(X5.star.rate,title,colour=category))+geom_point()+geom_line(aes(group=category))+
+          labs(x="5 star rates",y="Games' titles"))
+direct.label(graph)
+```
+Before drawing this graph, the $5$ star rates of top-ranked games, which can indicate the real favorable rate, are generated from the number of total ratings and the number of $5$ star ratings.
+
+In this graph, games are grouped by categories. Except Solitaire, all top-ranked games have a high $5$ star rates (at least above $50\%$), which satisfies the intuition. Solitaire's data is confusing, but compared with high $5$ star rates of other games, it is reasonable to regard the data points of Solitaire with low $5$ star rates as irregular points (i.e. below $30\%$). 
+
+In general, the $5$ star rates of those top-ranked games are around $0.7$. The top-ranked games in category Game Word have the best performance. Conversely, the top-ranked games in category Game Simulation perform comparatively bad. Except irregular values of Solitaire, the game with the lowest $5$ star rate is in the category Game Card, named HearthStone.
+
+```{r}
+#remove irregular values
+Table_w<-Table_n[-which(Table_n$X5.star.rate<0.3),]
+ggplot(Table_w,aes(X5.star.rate,installs_in_million,colour=category))+geom_point()+geom_line(linetype="dashed")+
+          labs(x="5 star rates",y="installations in million")
+```
+After removing those irregular points of Solitaire, the scatter plot of $5$ star rates vs the number of installations is provided. We find that the number of installations of the games with extreme values of $5$ star rates tends to be low. It is difficult to figure out linear relationship between installs in million and 5 star rates. Moreover, the categories of top-ranked games do not show obvious difference in the number of installations.
