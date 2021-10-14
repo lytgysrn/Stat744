@@ -61,3 +61,15 @@ ggplot(Table_w,aes(X5.star.rate,installs_in_million,colour=category))+geom_point
           labs(x="5 star rates",y="installations in million")
 ```
 After removing those irregular points of Solitaire, the scatter plot of $5$ star rates vs the number of installations is provided. We find that the number of installations of the games with extreme values of $5$ star rates tends to be low. It is difficult to figure out linear relationship between installs in million and 5 star rates. Moreover, the categories of top-ranked games do not show obvious difference in the number of installations.
+
+## JD
+
+I cannot run this code, because I don't have access to the file D:/android-games.csv, which anyway is an absolute path so I wouldn't be able to run it anyway. It also means I can't knit the file. I did read the markdown and look at the figures.
+
+It's an interesting table, and I agree that it's hard to read. I am not getting much of a story from your pictures, or your explanation, though. Can you think of possible ways to make the pictures visually clearer? I remember Ben was talking about 2-3 analogues of the boxplot, for example.
+
+The grey grid makes these figures hard to see. There is no obvious logic to the ordering choices you made 
+
+There's obviously something wrong with Solitaire, since it has four lines in the table with the same number of ratings but different numbers of high ratings. There's also something quite weird about the pattern of installs, with only a few distinct values.
+
+Grade 1.6/3
