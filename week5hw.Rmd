@@ -1,0 +1,61 @@
+---
+title: "Week5_HW"
+author: "Siyi Wang"
+date: "2021/10/19"
+output: pdf_document
+---
+
+
+
+# DATA
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(dotwhisker)
+library(effects)
+
+salary<-read.csv("http://forge.scilab.org/index.php/p/rdataset/source/file/master/csv/car/Salaries.csv")
+data.x<-salary[,-1]
+data.x<-data.x%>%mutate(rank= factor(rank),discipline=factor(discipline),sex=factor(sex))
+data.x$rank<- factor(data.x$rank, levels=c("AsstProf", "AssocProf", "Prof"))
+summary(data.x)
+```
+
+The data set I used is about salaries of professors in a University, there are $5$ explanatory variables, which are rank, discipline, yrs.since.phd, yrs.servise, sex, and one response variable, which is salary.
+
+# Model Fitting and graphing
+
+```{r}
+model_full<- lm(salary~., data = data.x)
+anova(model_full)
+#Since the salary value is large, I prefer to log it.
+#linear regression model
+
+model_log<-lm(log(salary)~.,data=data.x)
+model_log2 <- tidy(model_log) %>% by_2sd(data.x) 
+anova(model_log)
+
+
+```
+
+
+Anova table shows ``rank`'' and ``discipline'' are very significant.
+
+```{r}
+#Reorder
+
+order<-order(model_log2$estimate,decreasing =TRUE)
+
+gg0<-dotwhisker::dwplot(model_log, by_2sd=T,vars_order = model_log2$term[order])
+gg0+geom_vline(xintercept=0,lty=2)+ labs(
+         title = "Linear Regression coefficients")
+```
+From above plot, We can see rank professor, associate professor and discipline B are obviously have positive effects on salaries. Gender Male and years after obtaining PhD degree may have a little bit positive effects on salaries, but we cannot reject the probability that they have negative effects on salaries. Interestingly, we find in this data set the service year has adverse effects on salaries..
+
+
+Next, more specific graphs are shown.
+The prediction plots below give more intuitive pictures about $5$ predictors. 
+It is easy to see two significant variables, rank and discipline, represent clear increasing trends of salaries from Assistant professor to professor, and from discipline A to B respectively. In yrs.since.phd.effect and yrs.service effect plots, we notice that the confidence interval is quite wide in large values. The reason is when the values of years become larger, we have less observations in our data set. The last graph shows our data set cannot tell an accurate story about how gender effect the salaries of professors, because the confidence interval about female is too wide.
+```{r}
+plot(ae <- allEffects(model_log))
+```
