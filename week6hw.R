@@ -17,7 +17,7 @@ data.terror$region_txt<-factor(region_txt)
 summary(data.terror)
 #This data set is too large, I decide to choose a subset of it. I will use the top 5 countries' data.
 
-country_code<-unique(country)
+
 sample<-c(95,153,4,92,45)
 data.x<-data.terror[data.terror$country %in% sample,]
 #Only consider data after 2000
@@ -61,12 +61,14 @@ gg0 <- ggplot(df.new)+geom_point(aes(x = log(N_events_year),
 gg1 <- gg0+transition_states(year,state_length = 3)+ease_aes('cubic-in-out')
 
 
+
 #save it
 gg1.gif <- animate(gg1)
+gg1.gif
 anim_save("terror.gif")
 
-#X axis represnts the log number of terror attacks by year, 
-#and y axis represents the log number of deaths because of terror attacks by year
+#X axis represents the log number of terror attacks by year, 
+#y axis represents the log number of deaths because of terror attacks by year
 
 #Or use package plotly 
 
@@ -86,6 +88,7 @@ plot.fig <- df.new %>%
 plot.fig<-plot.fig%>%layout(xaxis=list(title="Log # of terror attacks"),yaxis=list(title='Log # of deaths'))
 
 plot.fig
+#Advantage is we can use mouse to choose the year we are interested in.
 
 # The terrorism in Iraq is not serious before 2003, and then both the number of terror attacks and deaths of it soar.
 # Overall, from 2000 to 2018, the terrorism in Afghanistan, India, Iraq and Pakistan seem to become more rampant, while in Colombia, the level of terrorism seem to be steady.
