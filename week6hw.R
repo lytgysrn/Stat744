@@ -8,7 +8,7 @@ library(gganimate)
 #https://www.start.umd.edu/gtd/
 #I upload a subset to my repository for running the code.
 
-data.terror <- read.csv("Terror.csv", header = TRUE)
+data.terror <- read.csv("https://raw.githubusercontent.com/lytgysrn/Stat744/main/Terror.csv", header = TRUE)
 attach(data.terror)
 data.terror$country<-factor(country)
 data.terror$country_txt<-factor(country_txt)
@@ -49,6 +49,7 @@ df.new$N_kills_year<-as.numeric(df.new$N_kills_year)
 #animation plots ggani
 
 gg0 <- ggplot(df.new)+geom_point(aes(x = log(N_events_year),
+                                     #log for aesthetics
                     y = log(N_kills_year),
                     color=country_name,shape=country_name),size=5)+
                     theme_classic()+
@@ -85,3 +86,8 @@ plot.fig <- df.new %>%
 plot.fig<-plot.fig%>%layout(xaxis=list(title="Log # of terror attacks"),yaxis=list(title='Log # of deaths'))
 
 plot.fig
+
+# The terrorism in Iraq is not serious before 2003, and then both the number of terror attacks and deaths of it soar.
+# Overall, from 2000 to 2018, the terrorism in Afghanistan, India, Iraq and Pakistan seem to become more rampant, while in Colombia, the level of terrorism seem to be steady.
+
+# P.S. In presentation, for interpretability, we can also show raw data without log.  
