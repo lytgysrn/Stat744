@@ -18,6 +18,8 @@ summary(data.terror)
 #This data set is too large, I decide to choose a subset of it. I will use the top 5 countries' data.
 
 
+## JD: This is fragile code. Better to choose based on some measurable property of the data set. Or just sort and choose the top 5.
+## Also, given what you're interested in summarizing, you could probably sum over events and deaths first, and then you would have a smaller data set before you threw anything out.
 sample<-c(95,153,4,92,45)
 data.x<-data.terror[data.terror$country %in% sample,]
 #Only consider data after 2000
@@ -33,6 +35,7 @@ for (i in sample){
   assign(paste("country_", i, sep = ""), data.x[data.x$country==i,])
 }
 
+## JD: Have you tried to learn "tidy" coding as we recommend?
 dataTrans<-function(country){
   N_events_year<-sapply(2000:2018, function(x){length(which(country$iyear==x))})
   N_kills_year<-sapply(2000:2018, function(x){sum(country[country$iyear==x,]$nkill)})
@@ -67,6 +70,8 @@ gg1.gif <- animate(gg1)
 gg1.gif
 anim_save("terror.gif")
 
+## JD: Do NOT show the log on your log scale (especially log_e, which is the default). Make the axis show the number before you logged it. This is easy in ggplot, but not that hard in base R either.
+
 #X axis represents the log number of terror attacks by year, 
 #y axis represents the log number of deaths because of terror attacks by year
 
@@ -93,4 +98,10 @@ plot.fig
 # The terrorism in Iraq is not serious before 2003, and then both the number of terror attacks and deaths of it soar.
 # Overall, from 2000 to 2018, the terrorism in Afghanistan, India, Iraq and Pakistan seem to become more rampant, while in Colombia, the level of terrorism seem to be steady.
 
+## JD: Is it obvious that just not using logs makes things more interpretable? Are there other things you can do if you want a concrete interpretation of the data?
 # P.S. In presentation, for interpretability, we can also show raw data without log.  
+
+## JD: Still missing discussion of dataviz choices, and see above. 
+## Nice work with the two animations
+
+## 2/3
